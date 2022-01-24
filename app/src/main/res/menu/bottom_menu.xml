@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/first_frag"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:iconTint="@color/app_default"
+        android:title="HOME"
+        tools:targetApi="o"
+        tools:ignore="HardcodedText" />
+    <item
+            android:id="@+id/sec_frag"
+            android:icon="@drawable/appoint_green"
+            android:iconTint="@color/app_default"
+            android:title="APPOINTMENTS"
+            tools:ignore="HardcodedText,UnusedAttribute" />
+        <item
+            android:id="@+id/third_frag"
+            android:icon="@drawable/profile_green"
+            android:iconTint="@color/app_default"
+            android:title="PROFILE"
+            tools:ignore="HardcodedText,UnusedAttribute" />
+
+</menu>

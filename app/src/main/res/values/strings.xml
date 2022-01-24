@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Curic forDoctors</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fbHandle">https://www.instagram.com/curic_ind/</string>
+    <string name="twitterHandle">https://twitter.com/curic_ind</string>
+    <string name="instaHandle">https://www.instagram.com/curic_ind/</string>
+    <string name="LoginText"><![CDATA[By Clicking on the \"Login\" button or Social Profiles, you agree to our Terms of Use & Privacy Policy]]></string>
+    <string name="RegisterText"><![CDATA[By Clicking on the  \"Register\" button or Social Profiles, you agree to our Terms of Use & Privacy Policy]]></string>
+    <string name="CuricforDocPrivacyPolicy">https://www.privacypolicies.com/live/636d5dfb-feee-4a81-b7ca-d12cf660b420</string>
+    <string name="CuricforDocTermsOfUse">https://www.privacypolicies.com/live/636d5dfb-feee-4a81-b7ca-d12cf660b420</string>
+    <string name="default_web_client_id_forGmailLogin">465588597737-fr6ulc3sgqo5suqvt97ij5199ikmjjc7.apps.googleusercontent.com</string>
+    <string name="playstore_link">https://play.google.com/store/apps/details?id=com.curicfordoc.app</string>
+    <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="verification_text">Verification under process, we will notify you when it completes. It can takes 2-3 working days.\nYou can continue using our services while the verification under process.</string>
+</resources>

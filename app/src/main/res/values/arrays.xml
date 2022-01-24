@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="doctors_category">
+        <item>Select a Category</item>
+        <item>Allergists/Immunologists</item>
+        <item>Anesthesiologists</item>
+        <item>Cardiologists</item>
+        <item>Colon and Rectal Surgeons</item>
+        <item>Critical Care Medicine Specialists</item>
+        <item>Dermatologists</item>
+        <item>Endocrinologists</item>
+        <item>Emergency Medicine Specialists</item>
+        <item>Gastroenterologists</item>
+        <item>Geriatric Medicine Specialists</item>
+        <item>Hematologists</item>
+        <item>Infectious Disease Specialists</item>
+        <item>Internists</item>
+        <item>Medical Geneticists</item>
+        <item>Nephrologists</item>
+        <item>Neurologists</item>
+        <item>Obstetricians and Gynecologists</item>
+        <item>Oncologists</item>
+        <item>Ophthalmologists</item>
+        <item>Osteopaths</item>
+        <item>Otolaryngologists</item>
+        <item>Pathologists</item>
+        <item>Pediatricians</item>
+        <item>Physicists</item>
+        <item>Plastic Surgeons</item>
+        <item>Podiatrists</item>
+        <item>Psychiatrists</item>
+        <item>Pulmonologists</item>
+        <item>Radiologists</item>
+        <item>Rheumatologists</item>
+        <item>General Surgeons</item>
+        <item>Urologists</item>
+        <item>Others..</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        </string-array>
+</resources>

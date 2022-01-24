@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "465588597737",
+    "firebase_url": "https://curic-ind-default-rtdb.firebaseio.com",
+    "project_id": "curic-ind",
+    "storage_bucket": "curic-ind.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465588597737:android:3e05cd159f156b2ecbd178",
+        "android_client_info": {
+          "package_name": "com.curicfordoc.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465588597737-tcaunnjkctoj5nkd0pt7uidmna66h1ls.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.curicfordoc.app",
+            "certificate_hash": "2e99fb1431cb4051423f92ed16623005f612781d"
+          }
+        },
+        {
+          "client_id": "465588597737-0lhq6bi1od1ka918p33s31sq8rp47ov8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx2MjMLi1rnke-4zLh5riXLhWqFGB2pZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465588597737-0lhq6bi1od1ka918p33s31sq8rp47ov8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

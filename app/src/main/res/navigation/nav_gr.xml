@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_gr"
+    app:startDestination="@id/first_frag">
+
+    <fragment
+        android:id="@+id/first_frag"
+        android:name="com.curicfordoc.app.first_frag"
+        android:label="fragment_first_frag2"
+        tools:layout="@layout/fragment_first_frag" />
+    <fragment
+        android:id="@+id/sec_frag"
+        android:name="com.curicfordoc.app.sec_frag"
+        android:label="fragment_sec_frag"
+        tools:layout="@layout/fragment_sec_frag" />
+    <fragment
+        android:id="@+id/third_frag"
+        android:name="com.curicfordoc.app.third_frag"
+        android:label="fragment_third_frag"
+        tools:layout="@layout/fragment_third_frag" />
+</navigation>

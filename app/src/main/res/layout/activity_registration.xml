@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".registration">
+
+    <EditText
+        android:id="@+id/phonetxt"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:hint="Phone  no."
+        android:inputType="phone"
+        android:paddingStart="40px"
+        android:paddingTop="20px"
+        android:paddingEnd="40px"
+        android:paddingBottom="20px"
+        app:layout_constraintBottom_toTopOf="@+id/otptxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/fnametxt"
+        android:layout_width="145dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:hint="First name"
+        android:inputType="textPersonName"
+        android:paddingStart="40px"
+        android:paddingTop="20px"
+        android:paddingEnd="40px"
+        android:paddingBottom="20px"
+        app:layout_constraintBottom_toTopOf="@+id/phonetxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/phonetxt"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/lnametxt"
+        android:layout_width="145dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:hint="Last name"
+        android:inputType="textPersonName"
+        android:paddingStart="40px"
+        android:paddingTop="20px"
+        android:paddingEnd="40px"
+        android:paddingBottom="20px"
+        app:layout_constraintBottom_toTopOf="@+id/phonetxt"
+        app:layout_constraintEnd_toEndOf="@+id/phonetxt"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/otptxt"
+        android:layout_width="189dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:hint="Otp"
+        android:inputType="phone"
+        android:paddingStart="40px"
+        android:paddingTop="20px"
+        android:paddingEnd="40px"
+        android:paddingBottom="20px"
+        app:layout_constraintBottom_toTopOf="@+id/passtxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/phonetxt"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/otpwrong"
+        android:layout_width="34dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/otpright"
+        app:layout_constraintEnd_toEndOf="@+id/otpright"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="@+id/otpright"
+        app:layout_constraintTop_toTopOf="@+id/otpright"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/wrong" />
+
+    <ImageView
+        android:id="@+id/otpright"
+        android:layout_width="34dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/otptxt"
+        app:layout_constraintEnd_toEndOf="@+id/otptxt"
+        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintStart_toStartOf="@+id/otptxt"
+        app:layout_constraintTop_toTopOf="@+id/otptxt"
+        app:srcCompat="@drawable/tick" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please verify your phone to continue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125" />
+
+    <ProgressBar
+        android:id="@+id/sendingotp"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="92dp"
+        android:layout_height="35dp"
+        android:background="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/getotp"
+        app:layout_constraintEnd_toEndOf="@+id/getotp"
+        app:layout_constraintStart_toStartOf="@+id/getotp"
+        app:layout_constraintTop_toTopOf="@+id/getotp" />
+
+    <Button
+        android:id="@+id/getotp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Otp"
+        android:textColor="#000000"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/otptxt"
+        app:layout_constraintEnd_toEndOf="@+id/phonetxt"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/otptxt"
+        app:layout_constraintTop_toTopOf="@+id/otptxt" />
+
+    <EditText
+        android:id="@+id/passtxt"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingStart="40px"
+        android:paddingTop="20px"
+        android:paddingEnd="40px"
+        android:paddingBottom="20px"
+        app:layout_constraintBottom_toTopOf="@+id/conpasstxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/conpasstxt"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:hint="Confirm password"
+        android:inputType="textPassword"
+        android:paddingStart="40px"
+        android:paddingTop="20px"
+        android:paddingEnd="40px"
+        android:paddingBottom="20px"
+        app:layout_constraintBottom_toTopOf="@+id/RegistrationText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/conpassright"
+        android:layout_width="34dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/conpasstxt"
+        app:layout_constraintEnd_toEndOf="@+id/conpasstxt"
+        app:layout_constraintHorizontal_bias="0.982"
+        app:layout_constraintStart_toStartOf="@+id/conpasstxt"
+        app:layout_constraintTop_toTopOf="@+id/conpasstxt"
+        app:srcCompat="@drawable/tick" />
+
+    <TextView
+        android:id="@+id/wrngPass"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:background="#FFFFFF"
+        android:paddingTop="13px"
+        android:shadowColor="#52000000"
+        android:shadowDx="10"
+        android:shadowDy="10"
+        android:shadowRadius="10"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:drawableTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/passtxt"
+        app:layout_constraintEnd_toEndOf="@+id/passtxt"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/passtxt"
+        app:layout_constraintTop_toTopOf="@+id/passtxt" />
+
+    <TextView
+        android:id="@+id/wrngConpass"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:background="#FFFFFF"
+        android:paddingTop="13px"
+        android:shadowColor="#52000000"
+        android:shadowDx="10"
+        android:shadowDy="10"
+        android:shadowRadius="10"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:drawableTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/conpasstxt"
+        app:layout_constraintEnd_toEndOf="@+id/conpasstxt"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/conpasstxt"
+        app:layout_constraintTop_toTopOf="@+id/conpasstxt" />
+
+    <ImageView
+        android:id="@+id/passright"
+        android:layout_width="34dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/passtxt"
+        app:layout_constraintEnd_toEndOf="@+id/passtxt"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="@+id/passtxt"
+        app:layout_constraintTop_toTopOf="@+id/passtxt"
+        app:srcCompat="@drawable/tick" />
+
+    <TextView
+        android:id="@+id/RegistrationText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/segoui"
+        android:text="@string/RegisterText"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/google"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="@+id/conpasstxt"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/fb"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/regbut"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@+id/regbut"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/fblogo" />
+
+    <ImageView
+        android:id="@+id/google"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/regbut"
+        app:layout_constraintEnd_toEndOf="@+id/btologin"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/google" />
+
+    <ImageView
+        android:id="@+id/btologin"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/conpasstxt"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/btologin" />
+
+    <ImageView
+        android:id="@+id/regbut"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/conpasstxt"
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/regbut" />
+
+    <ProgressBar
+        android:id="@+id/loading_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="75dp"
+        android:layout_height="62dp"
+        android:background="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="96dp"
+        android:layout_height="44dp"
+        android:background="@drawable/custom_edit_text"
+        android:paddingTop="20px"
+        android:paddingBottom="20px"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/getotp"
+        app:layout_constraintEnd_toEndOf="@+id/sendingotp"
+        app:layout_constraintStart_toStartOf="@+id/getotp"
+        app:layout_constraintTop_toTopOf="@+id/getotp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
