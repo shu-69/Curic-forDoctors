@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +56,8 @@ public class first_frag extends Fragment {
     LabeledSwitch toogleOpenclose;
     TextView textOpenClose;
     LottieAnimationView refresh;
+    CardView hospitalRegistrationMessage;
+    LinearLayout appointmentsContainer;
 
     SharedPreferences HospDetailsSP;
     SharedPreferences.Editor editor;
@@ -107,11 +114,20 @@ public class first_frag extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_first_frag, container, false);
 
+        HospDetailsSP = getContext().getSharedPreferences("HospDetails", Context.MODE_PRIVATE);
+        editor = HospDetailsSP.edit();
+
         hook();
         toogler();
 
-        HospDetailsSP = getContext().getSharedPreferences("HospDetails", Context.MODE_PRIVATE);
-        editor = HospDetailsSP.edit();
+        if(checkIfHospitalRegistered()){
+            loadAppointments();
+            loadAppointments();
+            loadAppointments();
+            loadAppointments();
+        }
+        else
+            hospitalRegistrationMessage.setVisibility(View.VISIBLE);
 
         if (new userDetails().initialize(getContext())) {
             new userDetails().onCreate();
@@ -134,6 +150,13 @@ public class first_frag extends Fragment {
 
 
         return view;
+    }
+
+    private void loadAppointments() {
+        View view = View.inflate(getContext(), R.layout.appointment_details_card, null);
+
+        appointmentsContainer.addView(view);
+
     }
 
     private class LoadImage extends AsyncTask<String, Void, Bitmap> {
@@ -197,6 +220,36 @@ public class first_frag extends Fragment {
         toogleOpenclose = (LabeledSwitch) view.findViewById(R.id.toogleOpenClose);
         textOpenClose = (TextView) view.findViewById(R.id.textOpenClose);
         refresh = (LottieAnimationView) view.findViewById(R.id.refresh);
+        hospitalRegistrationMessage = view.findViewById(R.id.hospital_registration_message_card);
+
+        appointmentsContainer = view.findViewById(R.id.todayAppointLinear);
+    }
+
+    private void showNoAppointmentsCard(){
+        TextView day_name = view.findViewById(R.id.day_name);
+        TextView day_date = view.findViewById(R.id.day_date);
+        CardView noAppointmentsCard = view.findViewById(R.id.no_appointments_card);
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
+        Date date = new Date(year, month, day-1);
+        String dayOfWeek = simpledateformat.format(date);
+
+        day_name.setText(dayOfWeek);
+        day_date.setText(String.valueOf(day));
+        noAppointmentsCard.setVisibility(View.VISIBLE);
+    }
+
+    private boolean checkIfHospitalRegistered(){
+
+        if(HospDetailsSP.contains("hospName"))
+            return true;
+
+        return false;
     }
 
     public void refresher() {
@@ -209,3 +262,22 @@ public class first_frag extends Fragment {
         refresh.pauseAnimation();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

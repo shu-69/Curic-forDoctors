@@ -12,7 +12,10 @@
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/drop_shadow.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/ic_camera_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/layout_bg.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/layout_bg_transparent.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/send_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/triangle.xml" value="0.2" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_call_back_support.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_clinic_details.xml" value="0.264" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_details_loader.xml" value="0.152" />
@@ -29,9 +32,11 @@
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_transaction_history.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_verification.xml" value="0.2878475798146241" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_web_view.xml" value="0.21603260869565216" />
-        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/fragment_first_frag.xml" value="0.2878475798146241" />
-        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/fragment_sec_frag.xml" value="0.72" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/appointment_details_card.xml" value="0.4" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/fragment_first_frag.xml" value="0.2" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/fragment_sec_frag.xml" value="0.264" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/fragment_third_frag.xml" value="0.264" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/layout_bg.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/new_doctor_details_card.xml" value="0.2844488188976378" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/rate_us_layout_dialog.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/shimmer_layout.xml" value="0.25" />
@@ -53,7 +58,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.2878475798146241" />
+        <option name="scale" value="0.4" />
       </ProjectState>
     </option>
   </component>

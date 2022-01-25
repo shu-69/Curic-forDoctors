@@ -47,9 +47,9 @@ public class third_frag extends Fragment {
     View view;
     ImageView verification_badge, profileImage;
     CardView updateDetails_card, ManageDoctorsCard, TransactionHistoryCard, InviteCard, FeedbackCard, RateUsCard, HelpAndSupportCard, BugReportCard, AboutCuricCard;
-    CardView profileImageCard, userDetailsCard, hospitalRegistrationCard, uploadDetailsCard;
+    CardView profileImageCard, hospitalRegistrationCard, uploadDetailsCard;
     LinearLayout ratingLayout;
-    ConstraintLayout fundsDetailsLayout;
+    ConstraintLayout allHospDetailsCardLayout;
 
     SharedPreferences HospDetailsSP;
     SharedPreferences.Editor editor;
@@ -121,9 +121,8 @@ public class third_frag extends Fragment {
             if (image != null)
                 profileImage.setImageBitmap(image);
         } else {
+            allHospDetailsCardLayout.setVisibility(View.GONE);
             hospitalRegistrationCard.setVisibility(View.VISIBLE);
-            userDetailsCard.setVisibility(View.GONE);
-            fundsDetailsLayout.setVisibility(View.GONE);
             uploadDetailsCard.setOnClickListener(v -> startActivity(new Intent(getContext(), clinic_details.class)));
         }
 
@@ -257,13 +256,11 @@ public class third_frag extends Fragment {
         BugReportCard = view.findViewById(R.id.bugReportCard);
         AboutCuricCard = view.findViewById(R.id.aboutCuricCard);
 
-
+        allHospDetailsCardLayout = view.findViewById(R.id.allHospDetailsCardConstraintLayout);
         profileImageCard = view.findViewById(R.id.profileImageCard);
         ratingLayout = view.findViewById(R.id.ratingLayout);
-        userDetailsCard = view.findViewById(R.id.userDetailsCard);
         hospitalRegistrationCard = view.findViewById(R.id.hospital_registration_message_card);
         uploadDetailsCard = view.findViewById(R.id.upload_details_card);
-        fundsDetailsLayout = view.findViewById(R.id.secCardConstraint);
     }
 
     private void setUserID(boolean isHidden, String ID, TextView TextView) {
