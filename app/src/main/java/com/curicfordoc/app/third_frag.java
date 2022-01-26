@@ -106,8 +106,7 @@ public class third_frag extends Fragment {
         hook();
         HospDetailsSP = getContext().getSharedPreferences("HospDetails", Context.MODE_PRIVATE);
         editor = HospDetailsSP.edit();
-        new userDetails().initialize(getContext());
-        new userDetails().onCreate();
+        new userDetails(getContext());
 
         setUserID(true, userDetails.userId, userIdTextV);
         setRating(getContext().getDrawable(R.drawable.rating_full_star), getContext().getDrawable(R.drawable.rating_half_star),

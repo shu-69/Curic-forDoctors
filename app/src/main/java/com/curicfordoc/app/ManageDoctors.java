@@ -106,8 +106,7 @@ public class ManageDoctors extends AppCompatActivity {
 
         HospDetails = getSharedPreferences("HospDetails", MODE_PRIVATE);
 
-        if (new userDetails().initialize(ManageDoctors.this))
-            new userDetails().onCreate();
+        new userDetails(ManageDoctors.this);
 
 
         loadDoctorsProfile(userDetails.login_method, userDetails.userId);
@@ -211,7 +210,6 @@ public class ManageDoctors extends AppCompatActivity {
         Spinner DocGenderSpinner = view.findViewById(R.id.docGender);
         ImageView DocProfileImage = view.findViewById(R.id.docProfileImage);
         TextView DocSpecializationTextV = view.findViewById(R.id.doctor_specialization);
-        ChipGroup ChipGroup = view.findViewById(R.id.chip_group);
         TextView ExperienceTextV = view.findViewById(R.id.experience);
         CheckBox check_mon, check_tue, check_wed, check_thur, check_fri, check_sat, check_sun;
         TextView mon_1st_from_time, mon_1st_to_time, mon_2nd_from_time, mon_2nd_to_time,
@@ -500,7 +498,7 @@ public class ManageDoctors extends AppCompatActivity {
             TempImageView = DocProfileImage;
             ImagePicker.with(this)
                     .crop()                    //Crop image(Optional), Check Customization for more option
-                    .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                    .compress(100)            //Final image size will be less than 100 KB(Optional)
                     .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                     .start();
         });
@@ -1407,8 +1405,7 @@ public class ManageDoctors extends AppCompatActivity {
         // </editor-fold> //
         SubmitButton.setOnClickListener(v -> {
 
-            if (new userDetails().initialize(ManageDoctors.this))
-                new userDetails().onCreate();
+            new userDetails(ManageDoctors.this);
 
             String Name = DocNameTextV.getText().toString().trim();
             String Gender = DocGenderSpinner.getSelectedItem().toString();
@@ -1605,8 +1602,7 @@ public class ManageDoctors extends AppCompatActivity {
             }).show();
         });
         UpdateCard.setOnClickListener(v -> {
-            if (new userDetails().initialize(ManageDoctors.this))
-                new userDetails().onCreate();
+            new userDetails(ManageDoctors.this);
 
             String Name = DocNameTextV.getText().toString().trim();
             String Gender = DocGenderSpinner.getSelectedItem().toString();

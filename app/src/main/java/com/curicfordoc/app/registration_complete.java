@@ -13,12 +13,18 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.curicfordoc.app.database.DatabaseHandler;
+import com.curicfordoc.app.database.DocDetail;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
 import java.io.FileNotFoundException;
@@ -255,6 +261,28 @@ public class registration_complete extends AppCompatActivity {
         Intent intent = new Intent(this, clinic_details.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);// display the activity without animation   getWindow().setWindowAnimations(0)
         startActivity(intent);
+    }
+
+    private void saveDoctorsDetails(String country, String state, String city, String login_method, String userId){
+        new userDetails(registration_complete.this);
+        db.collection("registered_doctors").document(login_method).collection(userId).document("doctors").collection("ids")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                DatabaseHandler DBHandler = new DatabaseHandler(registration_complete.this);
+                for (QueryDocumentSnapshot document : task.getResult()){
+                    DocDetail DocDetail = new DocDetail();
+                    DocDetail.setId(Integer.parseInt(document.getString("docId")));
+                    DocDetail.setName(document.getString("doctorName"));
+                    DocDetail.setExperience(document.getString("experience"));
+                    DocDetail.setFee(document.getString("fee"));
+                    DocDetail.setImage(document.getString("profileImage"));
+                    DocDetail.setSpecialization(document.getString("specialization"));
+
+                    DBHandler.addDoctor(DocDetail);
+                }
+            }
+        });
     }
 
     private void gohomescreen(View view) {

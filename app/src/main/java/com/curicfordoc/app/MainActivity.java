@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-           if(new userDetails().initialize(MainActivity.this))
-               new userDetails().onCreate();
+        new userDetails(MainActivity.this);
 
     }
 

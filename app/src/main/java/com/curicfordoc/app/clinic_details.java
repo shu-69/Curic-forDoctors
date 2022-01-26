@@ -5,6 +5,7 @@ import static android.graphics.Color.argb;
 import static com.curicfordoc.app.R.drawable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,8 +19,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -27,16 +32,19 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -44,6 +52,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -53,6 +62,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -69,6 +79,7 @@ public class clinic_details extends AppCompatActivity implements LocationListene
 
     EditText hospital_name, owner_name, contact_no, email_address;
     TextView location_details_but, upi_error, banking_error;
+    ImageView hospImage;
     EditText location_city, location_state, location_country, location_address;
     TextInputEditText upi_id, ac_holder_name, account_number, ifsc_code;
     Button submit_button;
@@ -108,8 +119,7 @@ public class clinic_details extends AppCompatActivity implements LocationListene
                     progressBar.setVisibility(View.VISIBLE);
                     scrollv.fullScroll(View.FOCUS_UP);
 
-                    if (new userDetails().initialize(clinic_details.this))
-                        new userDetails().onCreate();
+                    new userDetails(clinic_details.this);
 
                     Map<String, Object> note = new HashMap<>();
                     note.put("hospital_name", hospitalName);
@@ -122,6 +132,7 @@ public class clinic_details extends AppCompatActivity implements LocationListene
                     note.put("ratings", ratings);
                     note.put("hospId", hospID);
                     note.put("address", address);
+                    note.put("hospImage", BitMapToString(drawableToBitmap(hospImage.getDrawable())));
                     note.put("doctor_login_id", userDetails.userId);
                     note.put("details_verified", false);
                     note.put("doctor_login_method", userDetails.login_method);
@@ -193,6 +204,16 @@ public class clinic_details extends AppCompatActivity implements LocationListene
                 }
             }
         });
+        hospImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.with(clinic_details.this)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(400)            //Final image size will be less than 400 KB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
     }
 
     private boolean verification(String login_method, String userID) {
@@ -218,8 +239,7 @@ public class clinic_details extends AppCompatActivity implements LocationListene
         progressBar.setVisibility(View.VISIBLE);
         submit_button.setEnabled(false);
 
-        if (new userDetails().initialize(clinic_details.this))
-            new userDetails().onCreate();
+        new userDetails(clinic_details.this);
 
         db.collection("registered_doctors").document(userDetails.login_method).collection(userDetails.userId).document("hospital_details").get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -259,6 +279,8 @@ public class clinic_details extends AppCompatActivity implements LocationListene
                             account_number.setText(documentSnapshot.getString("bank_account_number"));
                             ifsc_code.setText(documentSnapshot.getString("bank_ifsc_code"));
                             hospID = documentSnapshot.getString("hospId");
+                            hospImage.setPadding(0,0,0,0);
+                            hospImage.setImageBitmap(StringToBitMap(documentSnapshot.getString("hospImage")));
                             try {ratings = Float.parseFloat(documentSnapshot.getString("ratings"));}catch (Exception e){ }
                             submit_button.setText("UPDATE DETAILS");
                             isDetailsExists = true;
@@ -335,6 +357,7 @@ public class clinic_details extends AppCompatActivity implements LocationListene
         owner_name = findViewById(R.id.owner_name);
         contact_no = findViewById(R.id.contact_no);
         email_address = findViewById(R.id.email_address);
+        hospImage = findViewById(R.id.hospProfileImage);
 
         location_details_but = findViewById(R.id.location_details_butt);
 
@@ -391,6 +414,20 @@ public class clinic_details extends AppCompatActivity implements LocationListene
         holder_name = ac_holder_name.getText().toString().trim();
         account_no = account_number.getText().toString().trim();
         ifsc = ifsc_code.getText().toString().trim();
+
+        String imageType = hospImage.getDrawable().toString();
+        String tempImageType = "";
+
+        for (int i = 0; i < imageType.length(); i++) {
+            if (imageType.charAt(i) == '@')
+                break;
+            else
+                tempImageType += imageType.charAt(i);
+        }
+
+
+        if (tempImageType.equals("android.graphics.drawable.VectorDrawable"))
+            return false;
 
         if (TextUtils.isEmpty(hospitalName)) {
             //scrollv.smoothScrollBy(0, -1000);
@@ -494,6 +531,53 @@ public class clinic_details extends AppCompatActivity implements LocationListene
     @Override
     public void onProviderDisabled(@NonNull String provider) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Uri uri = data.getData();
+        hospImage.setPadding(0, 0, 0, 0);
+        hospImage.setImageURI(uri);
+
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : 1;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : 1;
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     public class autoScroll1 extends Thread {

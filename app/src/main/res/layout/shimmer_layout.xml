@@ -4,49 +4,260 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:background="#e7e7e7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:background="#e7e7e7"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view1" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="20dp"
-        android:background="#e7e7e7"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#19000000"
+        app:strokeWidth="1dp">
 
-    <View
-        android:id="@+id/view4"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:background="#e7e7e7"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
 
-    <View
-        android:id="@+id/view5"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:background="#e7e7e7"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+            <View
+                android:id="@+id/materialCardView2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="#e7e7e7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </View>
+
+            <View
+                android:id="@+id/doctor_name"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="2dp"
+                android:background="#e7e7e7"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView2"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
+
+            <View
+                android:id="@+id/doctor_specialization"
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                android:background="#e7e7e7"
+                app:layout_constraintStart_toStartOf="@+id/doctor_name"
+                app:layout_constraintTop_toBottomOf="@+id/doctor_name" />
+
+            <View
+                android:id="@+id/textView54"
+                android:layout_width="80dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:background="#e7e7e7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
+
+            <View
+                android:id="@+id/cardView3"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:background="#e7e7e7"
+                app:layout_constraintStart_toStartOf="@+id/textView54"
+                app:layout_constraintTop_toBottomOf="@+id/textView54">
+
+            </View>
+
+            <View
+                android:layout_width="180dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#e7e7e7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/cardView3"
+                app:layout_constraintTop_toBottomOf="@+id/textView54">
+
+            </View>
+
+            <View
+                android:id="@+id/textView38"
+                android:layout_width="100dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:background="#e7e7e7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#E7E7E7"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView38">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/textView55"
+                        android:layout_width="180dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="#e7e7e7"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/cardView4"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#e7e7e7"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView55"/>
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#e7e7e7"
+                        app:layout_constraintStart_toEndOf="@+id/cardView4"
+                        app:layout_constraintTop_toBottomOf="@+id/textView55"/>
+
+                    <View
+                        android:id="@+id/cardView5"
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#e7e7e7"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView4"/>
+
+                    <View
+                        android:id="@+id/cardView6"
+                        android:layout_width="300dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#e7e7e7"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView5"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="#e7e7e7"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView6"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cancelAppointmentCardV"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:cardBackgroundColor="#B84040"-->
+<!--                app:cardCornerRadius="16dp"-->
+<!--                app:cardElevation="0dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/cardView7"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardView7">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingStart="10dp"-->
+<!--                    android:paddingTop="5dp"-->
+<!--                    android:paddingEnd="10dp"-->
+<!--                    android:paddingBottom="5dp">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_cancel_20" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:fontFamily="@font/segoeui_bold"-->
+<!--                        android:text="CANCEL"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/doneCardV"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                app:cardBackgroundColor="#B3062816"-->
+<!--                app:cardCornerRadius="16dp"-->
+<!--                app:cardElevation="0dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/cancelAppointmentCardV"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardView7">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingStart="10dp"-->
+<!--                    android:paddingTop="5dp"-->
+<!--                    android:paddingEnd="10dp"-->
+<!--                    android:paddingBottom="5dp">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_check_circle_20" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:fontFamily="@font/segoeui_bold"-->
+<!--                        android:text="Mark as Done!"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="12sp" />-->
+
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

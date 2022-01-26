@@ -1,9 +1,7 @@
 package com.curicfordoc.app;
 
-import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,35 +9,24 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.facebook.shimmer.ShimmerFrameLayout;
+import com.curicfordoc.app.database.DatabaseHandler;
+import com.curicfordoc.app.database.DocDetail;
 import com.github.angads25.toggle.LabeledSwitch;
 import com.github.angads25.toggle.interfaces.OnToggledListener;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -120,18 +107,32 @@ public class first_frag extends Fragment {
         hook();
         toogler();
 
+        DatabaseHandler DBHandler = new DatabaseHandler(getContext());
+
+        // Adding new DocDetails;
+        DocDetail DocDetail = new DocDetail(234534, "Shubham Kumar", "Dentist", "3", null, "400");
+        DocDetail.setId(23432);
+        DocDetail.setName("Shubham");
+        DocDetail.setExperience("30");
+        DocDetail.setFee("400");
+        DocDetail.setImage("null");
+        DocDetail.setSpecialization("Dentist");
+
+        // TODO :
+
+        DBHandler.addDoctor(DocDetail);
+
         if(checkIfHospitalRegistered()){
-            loadAppointments();
-            loadAppointments();
-            loadAppointments();
-            loadAppointments();
+            ToggleShimmer(true);
+            showAppointmentDetails(null, null);
+            showAppointmentDetails(null, null);
+            showAppointmentDetails(null, null);
+            showAppointmentDetails(null, null);
         }
         else
             hospitalRegistrationMessage.setVisibility(View.VISIBLE);
 
-        if (new userDetails().initialize(getContext())) {
-            new userDetails().onCreate();
-        }
+        new userDetails(getContext());
 
         new LoadImage().execute(HospDetailsSP.getString("userAvatar", "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"));
 
@@ -152,7 +153,7 @@ public class first_frag extends Fragment {
         return view;
     }
 
-    private void loadAppointments() {
+    private void showAppointmentDetails(String DocID, String AppointmentOrderID) {
         View view = View.inflate(getContext(), R.layout.appointment_details_card, null);
 
         appointmentsContainer.addView(view);
@@ -175,12 +176,14 @@ public class first_frag extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            editor.putString("profileImageBitmap", BitMapToString(result));
+            try {
+                editor.putString("profileImageBitmap", BitMapToString(result));
+            }catch (Exception e ){ }
             editor.apply();
         }
     }
 
-    public String BitMapToString(Bitmap bitmap) {
+    public String BitMapToString(Bitmap bitmap) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
@@ -223,6 +226,14 @@ public class first_frag extends Fragment {
         hospitalRegistrationMessage = view.findViewById(R.id.hospital_registration_message_card);
 
         appointmentsContainer = view.findViewById(R.id.todayAppointLinear);
+    }
+
+    private void ToggleShimmer(boolean Visibility){
+        CardView ShimmerCard = view.findViewById(R.id.loading_card);
+        if (Visibility)
+            ShimmerCard.setVisibility(View.VISIBLE);
+        else
+            ShimmerCard.setVisibility(View.GONE);
     }
 
     private void showNoAppointmentsCard(){

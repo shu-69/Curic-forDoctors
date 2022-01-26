@@ -16,37 +16,34 @@ public class userDetails extends Application {
 
     public static Context context;
 
-    public boolean initialize(Context con){
-        context = con;
-
-        return true;
+    public userDetails(Context context) {
+        this.context = context;
+        onCreate();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-
         try {
             FileInputStream inputStream = context.openFileInput("data");
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader br = new BufferedReader(inputStreamReader);
             login_method = br.readLine();
-            if (login_method.equals("phone")){
-                userName= br.readLine();
+            if (login_method.equals("phone")) {
+                userName = br.readLine();
                 userId = br.readLine();
                 login_method = "phone_users";
-            }else if (login_method.equals("google")){
+            } else if (login_method.equals("google")) {
                 userName = br.readLine();
                 userId = br.readLine();
                 login_method = "gmail_users";
-            }else if (login_method.equals("facebook")){
+            } else if (login_method.equals("facebook")) {
                 userName = br.readLine();
                 userId = br.readLine();
                 login_method = "fb_users";
             }
-        } catch (Exception e) { }
-
-        System.out.println(login_method);
+        } catch (Exception e) {
+        }
 
     }
 }

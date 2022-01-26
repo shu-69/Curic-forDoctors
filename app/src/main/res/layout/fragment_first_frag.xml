@@ -144,7 +144,7 @@
                     android:id="@+id/loading_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
@@ -155,7 +155,7 @@
 
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/appointment_loading_shimmer"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
