@@ -9,21 +9,34 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.curicfordoc.app.database.DatabaseHandler;
+import com.curicfordoc.app.database.AppointmentDetail;
+import com.curicfordoc.app.database.AppointmentsDatabaseHandler;
 import com.curicfordoc.app.database.DocDetail;
+import com.curicfordoc.app.database.DoctorsDatabaseHandler;
 import com.github.angads25.toggle.LabeledSwitch;
 import com.github.angads25.toggle.interfaces.OnToggledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -31,6 +44,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,11 +63,9 @@ public class first_frag extends Fragment {
     SharedPreferences HospDetailsSP;
     SharedPreferences.Editor editor;
 
-    private final static String FILE_NAME = "data";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     public static String login_method = "";
-    public static String userPhone = "";
-    public static String userEmail = "";
-    public static String userName = "";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,32 +119,36 @@ public class first_frag extends Fragment {
         hook();
         toogler();
 
-        DatabaseHandler DBHandler = new DatabaseHandler(getContext());
+        new userDetails(getContext());
 
-        // Adding new DocDetails;
-        DocDetail DocDetail = new DocDetail(234534, "Shubham Kumar", "Dentist", "3", null, "400");
-        DocDetail.setId(23432);
-        DocDetail.setName("Shubham");
-        DocDetail.setExperience("30");
-        DocDetail.setFee("400");
-        DocDetail.setImage("null");
-        DocDetail.setSpecialization("Dentist");
+        AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
+        for (int i=0; i<2; i++){
+            AppointmentDetail detail = new AppointmentDetail();
+            detail.setOrderId(i+"");
+            detail.setPaymentId("this is payment Id");
+            detail.setDocId("2343");
+            detail.setAppointmentDate("12/02/2022");
+            detail.setAppointmentTime("03:00am to 03:30am");
+            detail.setPatientName("shu");
+            detail.setPatientAge("21");
+            detail.setPatientGender("Male");
+            detail.setPatientContact("+91 7979958673");
+            detail.setPatientEmail("shubhamkumardps10@gmail.com");
+            detail.setPatientAddress("AP Colony, Bhatbigha, Near Modern Academy, Gaya, Bihar 823001");
+            detail.setDoctorFee("400");
+            detail.setPatientLoginMethod("gmail_users");
+            detail.setPatientLoginId("shubhamkumardps10@gmail.com");
 
-        // TODO :
+            ADHandler.addAppointment(detail);
+        }
 
-        DBHandler.addDoctor(DocDetail);
 
         if(checkIfHospitalRegistered()){
             ToggleShimmer(true);
-            showAppointmentDetails(null, null);
-            showAppointmentDetails(null, null);
-            showAppointmentDetails(null, null);
-            showAppointmentDetails(null, null);
+            loadAllAppointments(userDetails.login_method, userDetails.userId);
         }
         else
             hospitalRegistrationMessage.setVisibility(View.VISIBLE);
-
-        new userDetails(getContext());
 
         new LoadImage().execute(HospDetailsSP.getString("userAvatar", "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"));
 
@@ -153,8 +169,80 @@ public class first_frag extends Fragment {
         return view;
     }
 
+    private void loadAllAppointments(String login_method,String userId) {
+        db.collection("registered_doctors").document(login_method).collection(userId).document("appointments_received").collection("approved")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                boolean taskIsNull = true;
+                AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
+                for (QueryDocumentSnapshot document : task.getResult()){
+                    AppointmentDetail detail = new AppointmentDetail();
+                    detail.setOrderId(document.getString("orderId"));
+                    detail.setPaymentId(document.getString("paymentId"));
+                    detail.setDocId(document.getString("docId"));
+                    detail.setAppointmentDate(document.getString("appointmentDate"));
+                    detail.setAppointmentTime(document.getString("appointmentTime"));
+                    detail.setPatientName(document.getString("patientName"));
+                    detail.setPatientAge(document.getString("patientAge"));
+                    detail.setPatientGender(document.getString("patientGender"));
+                    detail.setPatientContact(document.getString("patientPhone"));
+                    detail.setPatientEmail(document.getString("patientEmail"));
+                    detail.setPatientAddress(document.getString("patientAddress"));
+                    detail.setDoctorFee(document.getString("doctorFee"));
+                    detail.setPatientLoginMethod(document.getString("patientLoginMethod"));
+                    detail.setPatientLoginId(document.getString("patientLoginId"));
+
+                    ADHandler.addAppointment(detail);
+                    taskIsNull = false;
+                }
+
+                if(taskIsNull){
+                    ToggleShimmer(false);
+                    showNoAppointmentsCard();
+                }else{
+                    ToggleShimmer(false);
+                }
+            }
+        });
+    }
+
     private void showAppointmentDetails(String DocID, String AppointmentOrderID) {
         View view = View.inflate(getContext(), R.layout.appointment_details_card, null);
+
+        ImageView DocProfile = view.findViewById(R.id.docProfileImage);
+        TextView DocName = view.findViewById(R.id.doctor_name);
+        TextView DocSpecialization = view.findViewById(R.id.doctor_specialization);
+
+        TextView AppointmentDate = view.findViewById(R.id.appointmentDate);
+        TextView AppointmentTime = view.findViewById(R.id.appointmentTime);
+
+        View TopCornerTriangleView = view.findViewById(R.id.topCornerTriangleView);
+        ImageView TopCornerImage = view.findViewById(R.id.topStatusImageV);
+
+        TextView PatientName = view.findViewById(R.id.patientName);
+        TextView PatientAge = view.findViewById(R.id.ageTextV);
+        TextView PatientGender = view.findViewById(R.id.genderTextV);
+        TextView PatientContact = view.findViewById(R.id.phoneTextV);
+        TextView PatientEmail = view.findViewById(R.id.emailTextV);
+        TextView PatientAddress = view.findViewById(R.id.addressTextV);
+
+        CardView DoneCard = view.findViewById(R.id.doneCardV);
+        TextView DoneCardTextV = view.findViewById(R.id.doneCardTextV);
+        CardView CancelCard = view.findViewById(R.id.cancelAppointmentCardV);
+        CardView MessageCard = view.findViewById(R.id.appointmentMessageCard);
+        TextView Message = view.findViewById(R.id.messageTextV);
+
+
+        try {
+            DocDetail docDetail = new DoctorsDatabaseHandler(getContext()).getDocDetail(DocID);
+
+
+
+        } catch (Exception e) {
+
+        }
+
 
         appointmentsContainer.addView(view);
 

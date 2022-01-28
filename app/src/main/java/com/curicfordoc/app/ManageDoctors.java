@@ -36,29 +36,26 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.curicfordoc.app.database.DoctorsDatabaseHandler;
+import com.curicfordoc.app.database.DocDetail;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import java.util.zip.Inflater;
 
 public class ManageDoctors extends AppCompatActivity {
 
@@ -155,6 +152,7 @@ public class ManageDoctors extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                DoctorsDatabaseHandler DBHandler = new DoctorsDatabaseHandler(ManageDoctors.this);
                 if (task.isSuccessful()) {
                     tabLayout.removeAllTabs();
                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -173,6 +171,16 @@ public class ManageDoctors extends AppCompatActivity {
                         FriTimeVC.add(document.getString("friday_timing"));
                         SatTimeVC.add(document.getString("saturday_timing"));
                         SunTimeVC.add(document.getString("sunday_timing"));
+
+                        DocDetail DocDetail = new DocDetail();
+                        DocDetail.setId(document.getString("docId"));
+                        DocDetail.setName(document.getString("doctorName"));
+                        DocDetail.setExperience(document.getString("experience"));
+                        DocDetail.setFee(document.getString("fee"));
+                        DocDetail.setImage(document.getString("profileImage"));
+                        DocDetail.setSpecialization(document.getString("specialization"));
+
+                        DBHandler.addDoctor(DocDetail);
                     }
                     profileLoader.setVisibility(View.GONE);
                     if (NameVC.size() == 0) {

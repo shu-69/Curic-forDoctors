@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.curicfordoc.app.database.DatabaseHandler;
+import com.curicfordoc.app.database.DoctorsDatabaseHandler;
 import com.curicfordoc.app.database.DocDetail;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,7 +25,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -255,6 +254,11 @@ public class registration_complete extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if(HospDetailsSP.contains("hospName")){
+                new userDetails(registration_complete.this);
+                saveDoctorsDetails(userDetails.login_method, userDetails.userId);
+            }
+
     }
 
     private void goclinic_details(View view) {
@@ -263,16 +267,16 @@ public class registration_complete extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void saveDoctorsDetails(String country, String state, String city, String login_method, String userId){
+    private void saveDoctorsDetails(String login_method, String userId){
         new userDetails(registration_complete.this);
         db.collection("registered_doctors").document(login_method).collection(userId).document("doctors").collection("ids")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                DatabaseHandler DBHandler = new DatabaseHandler(registration_complete.this);
+                DoctorsDatabaseHandler DBHandler = new DoctorsDatabaseHandler(registration_complete.this);
                 for (QueryDocumentSnapshot document : task.getResult()){
                     DocDetail DocDetail = new DocDetail();
-                    DocDetail.setId(Integer.parseInt(document.getString("docId")));
+                    DocDetail.setId(document.getString("docId"));
                     DocDetail.setName(document.getString("doctorName"));
                     DocDetail.setExperience(document.getString("experience"));
                     DocDetail.setFee(document.getString("fee"));
@@ -293,11 +297,11 @@ public class registration_complete extends AppCompatActivity {
 
     class timer extends Thread {
         public void run() {
+            saveTxt(login_method, userName, userId);
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {
             }
-            saveTxt(login_method, userName, userId);
             if (check_details) {
                 gohomescreen(null);
             } else {
