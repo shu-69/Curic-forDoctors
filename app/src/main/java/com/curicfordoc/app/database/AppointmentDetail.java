@@ -15,9 +15,9 @@ public class AppointmentDetail {
     private String doctorFee;
     private String patientLoginMethod;
     private String patientLoginId;
+    private String status;
 
-
-    public AppointmentDetail(String orderId, String docId, String paymentId, String appointmentTime, String appointmentDate, String patientName, String patientAge, String patientGender, String patientContact, String patientEmail, String patientAddress, String doctorFee, String patientLoginMethod, String patientLoginId) {
+    public AppointmentDetail(String orderId, String docId, String paymentId, String appointmentTime, String appointmentDate, String patientName, String patientAge, String patientGender, String patientContact, String patientEmail, String patientAddress, String doctorFee, String patientLoginMethod, String patientLoginId, String status) {
         this.orderId = orderId;
         this.docId = docId;
         this.paymentId = paymentId;
@@ -32,6 +32,7 @@ public class AppointmentDetail {
         this.doctorFee = doctorFee;
         this.patientLoginMethod = patientLoginMethod;
         this.patientLoginId = patientLoginId;
+        this.status = status;
     }
 
     public AppointmentDetail() {
@@ -39,6 +40,14 @@ public class AppointmentDetail {
 
     public String getOrderId() {
         return orderId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPaymentId() {

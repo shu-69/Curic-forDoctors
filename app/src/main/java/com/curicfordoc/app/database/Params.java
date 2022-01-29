@@ -30,6 +30,7 @@ public class Params {
     public static final String KEY_DOCTOR_FEE = "fee";
     public static final String KEY_PATIENT_LOGIN_METHOD = "patientLoginMethod";
     public static final String KEY_PATIENT_LOGIN_ID = "patientLoginId";
+    public static final String KEY_STATUS = "status";
 }
 
 

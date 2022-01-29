@@ -122,9 +122,9 @@ public class first_frag extends Fragment {
         new userDetails(getContext());
 
         AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
-        for (int i=0; i<2; i++){
+        for (int i = 0; i < 2; i++) {
             AppointmentDetail detail = new AppointmentDetail();
-            detail.setOrderId(i+"");
+            detail.setOrderId(i + "");
             detail.setPaymentId("this is payment Id");
             detail.setDocId("2343");
             detail.setAppointmentDate("12/02/2022");
@@ -138,16 +138,21 @@ public class first_frag extends Fragment {
             detail.setDoctorFee("400");
             detail.setPatientLoginMethod("gmail_users");
             detail.setPatientLoginId("shubhamkumardps10@gmail.com");
+            detail.setStatus("null");
 
             ADHandler.addAppointment(detail);
         }
 
+        showAppointmentDetails("334909310", "0");
+        showAppointmentDetails("469664598", "0");
+        showAppointmentDetails("510430864", "0");
+        showAppointmentDetails("580538425", "0");
+        showAppointmentDetails("580563842", "0");
 
-        if(checkIfHospitalRegistered()){
+        if (checkIfHospitalRegistered()) {
             ToggleShimmer(true);
             loadAllAppointments(userDetails.login_method, userDetails.userId);
-        }
-        else
+        } else
             hospitalRegistrationMessage.setVisibility(View.VISIBLE);
 
         new LoadImage().execute(HospDetailsSP.getString("userAvatar", "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"));
@@ -169,14 +174,14 @@ public class first_frag extends Fragment {
         return view;
     }
 
-    private void loadAllAppointments(String login_method,String userId) {
+    private void loadAllAppointments(String login_method, String userId) {
         db.collection("registered_doctors").document(login_method).collection(userId).document("appointments_received").collection("approved")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 boolean taskIsNull = true;
                 AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
-                for (QueryDocumentSnapshot document : task.getResult()){
+                for (QueryDocumentSnapshot document : task.getResult()) {
                     AppointmentDetail detail = new AppointmentDetail();
                     detail.setOrderId(document.getString("orderId"));
                     detail.setPaymentId(document.getString("paymentId"));
@@ -197,10 +202,10 @@ public class first_frag extends Fragment {
                     taskIsNull = false;
                 }
 
-                if(taskIsNull){
+                if (taskIsNull) {
                     ToggleShimmer(false);
                     showNoAppointmentsCard();
-                }else{
+                } else {
                     ToggleShimmer(false);
                 }
             }
@@ -234,18 +239,60 @@ public class first_frag extends Fragment {
         TextView Message = view.findViewById(R.id.messageTextV);
 
 
+        // Setting Doctor's Details
         try {
             DocDetail docDetail = new DoctorsDatabaseHandler(getContext()).getDocDetail(DocID);
 
-
+            DocProfile.setImageBitmap(StringToBitMap(docDetail.getImage()));
+            DocName.setText(docDetail.getName());
+            DocSpecialization.setText(docDetail.getSpecialization());
 
         } catch (Exception e) {
-
+            // TODO : If doctor's profile is not available in sql database;
+            Log.d("Ex", "1" + e.getMessage());
         }
 
+        // Setting Appointment's Details
+        try {
+            AppointmentDetail detail = new AppointmentsDatabaseHandler(getContext()).getAppointmentDetail(AppointmentOrderID);
 
-        appointmentsContainer.addView(view);
+            AppointmentDate.setText(detail.getAppointmentDate());
+            AppointmentTime.setText(detail.getAppointmentTime());
 
+            PatientName.setText(detail.getPatientName());
+            PatientAge.setText(detail.getPatientAge());
+            PatientGender.setText(detail.getPatientGender());
+            PatientContact.setText(detail.getPatientContact());
+            PatientEmail.setText(detail.getPatientEmail());
+            PatientAddress.setText(detail.getPatientAddress());
+
+//            String Status = detail.getStatus();
+//
+//            if(Status.equals("cancelled")){
+//                TopCornerTriangleView.setVisibility(View.VISIBLE);
+//                TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_circle_20));
+//                TopCornerImage.setVisibility(View.VISIBLE);
+//                CancelCard.setVisibility(View.GONE);
+//            }
+
+            appointmentsContainer.addView(view);
+
+        }catch (Exception  e){
+            Log.d("Ex", "2" + e.getMessage());
+            // TODO : If appointment details are not available in sql database;
+        }
+
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     private class LoadImage extends AsyncTask<String, Void, Bitmap> {
@@ -266,7 +313,8 @@ public class first_frag extends Fragment {
         protected void onPostExecute(Bitmap result) {
             try {
                 editor.putString("profileImageBitmap", BitMapToString(result));
-            }catch (Exception e ){ }
+            } catch (Exception e) {
+            }
             editor.apply();
         }
     }
@@ -316,7 +364,7 @@ public class first_frag extends Fragment {
         appointmentsContainer = view.findViewById(R.id.todayAppointLinear);
     }
 
-    private void ToggleShimmer(boolean Visibility){
+    private void ToggleShimmer(boolean Visibility) {
         CardView ShimmerCard = view.findViewById(R.id.loading_card);
         if (Visibility)
             ShimmerCard.setVisibility(View.VISIBLE);
@@ -324,7 +372,7 @@ public class first_frag extends Fragment {
             ShimmerCard.setVisibility(View.GONE);
     }
 
-    private void showNoAppointmentsCard(){
+    private void showNoAppointmentsCard() {
         TextView day_name = view.findViewById(R.id.day_name);
         TextView day_date = view.findViewById(R.id.day_date);
         CardView noAppointmentsCard = view.findViewById(R.id.no_appointments_card);
@@ -335,7 +383,7 @@ public class first_frag extends Fragment {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
-        Date date = new Date(year, month, day-1);
+        Date date = new Date(year, month, day - 1);
         String dayOfWeek = simpledateformat.format(date);
 
         day_name.setText(dayOfWeek);
@@ -343,9 +391,9 @@ public class first_frag extends Fragment {
         noAppointmentsCard.setVisibility(View.VISIBLE);
     }
 
-    private boolean checkIfHospitalRegistered(){
+    private boolean checkIfHospitalRegistered() {
 
-        if(HospDetailsSP.contains("hospName"))
+        if (HospDetailsSP.contains("hospName"))
             return true;
 
         return false;
