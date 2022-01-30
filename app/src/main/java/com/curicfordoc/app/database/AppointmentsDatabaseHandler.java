@@ -28,9 +28,9 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
                 " TEXT," + Params.KEY_PATIENT_EMAIL + " TEXT," + Params.KEY_PATIENT_ADDRESS +
                 " TEXT," + Params.KEY_DOCTOR_FEE + " TEXT," + Params.KEY_PATIENT_LOGIN_METHOD +
                 " TEXT," + Params.KEY_PATIENT_LOGIN_ID + " TEXT," + Params.KEY_STATUS +
-                " TEXT" + ")";
+                " TEXT," + Params.KEY_IS_DONE + " BOOLEAN," + Params.KEY_IS_CANCELED +
+                " BOOLEAN" +  ")";
 
-        Log.d("DBShuAppoint", create);
         db.execSQL(create);
     }
 
@@ -62,6 +62,7 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
             values.put(Params.KEY_PATIENT_LOGIN_METHOD, details.getPatientLoginMethod());
             values.put(Params.KEY_PATIENT_LOGIN_ID, details.getPatientLoginId());
             values.put(Params.KEY_STATUS, details.getStatus());
+            values.put(Params.KEY_IS_DONE, details.get);
 
             db.insert(Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME, null, values);
             db.close();

@@ -16,8 +16,10 @@ public class AppointmentDetail {
     private String patientLoginMethod;
     private String patientLoginId;
     private String status;
+    private boolean isDone;
+    private boolean isCancelled;
 
-    public AppointmentDetail(String orderId, String docId, String paymentId, String appointmentTime, String appointmentDate, String patientName, String patientAge, String patientGender, String patientContact, String patientEmail, String patientAddress, String doctorFee, String patientLoginMethod, String patientLoginId, String status) {
+    public AppointmentDetail(String orderId, String docId, String paymentId, String appointmentTime, String appointmentDate, String patientName, String patientAge, String patientGender, String patientContact, String patientEmail, String patientAddress, String doctorFee, String patientLoginMethod, String patientLoginId, String status, boolean isDone, boolean isCancelled) {
         this.orderId = orderId;
         this.docId = docId;
         this.paymentId = paymentId;
@@ -33,6 +35,8 @@ public class AppointmentDetail {
         this.patientLoginMethod = patientLoginMethod;
         this.patientLoginId = patientLoginId;
         this.status = status;
+        this.isDone = isDone;
+        this.isCancelled = isCancelled;
     }
 
     public AppointmentDetail() {
@@ -156,6 +160,22 @@ public class AppointmentDetail {
 
     public void setPatientLoginId(String patientLoginId) {
         this.patientLoginId = patientLoginId;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
     }
 }
 

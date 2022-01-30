@@ -266,14 +266,14 @@ public class first_frag extends Fragment {
             PatientEmail.setText(detail.getPatientEmail());
             PatientAddress.setText(detail.getPatientAddress());
 
-//            String Status = detail.getStatus();
-//
-//            if(Status.equals("cancelled")){
-//                TopCornerTriangleView.setVisibility(View.VISIBLE);
-//                TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_circle_20));
-//                TopCornerImage.setVisibility(View.VISIBLE);
-//                CancelCard.setVisibility(View.GONE);
-//            }
+            String Status = detail.getStatus();
+
+            if(Status.equals("cancelled")){
+                TopCornerTriangleView.setVisibility(View.VISIBLE);
+                TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_circle_20));
+                TopCornerImage.setVisibility(View.VISIBLE);
+                CancelCard.setVisibility(View.GONE);
+            }
 
             appointmentsContainer.addView(view);
 
