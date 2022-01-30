@@ -33,6 +33,7 @@ public class Params {
     public static final String KEY_STATUS = "status";
     public static final String KEY_IS_DONE = "isDone";
     public static final String KEY_IS_CANCELED = "isCanceled";
+    public static final String KEY_IS_PINNED = "isPinned";
 
 }
 

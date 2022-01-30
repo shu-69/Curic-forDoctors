@@ -138,7 +138,7 @@ public class first_frag extends Fragment {
             detail.setDoctorFee("400");
             detail.setPatientLoginMethod("gmail_users");
             detail.setPatientLoginId("shubhamkumardps10@gmail.com");
-            detail.setStatus("null");
+            detail.setStatus(2); // 0 : successful, 1 : cancelled
 
             ADHandler.addAppointment(detail);
         }
@@ -197,6 +197,15 @@ public class first_frag extends Fragment {
                     detail.setDoctorFee(document.getString("doctorFee"));
                     detail.setPatientLoginMethod(document.getString("patientLoginMethod"));
                     detail.setPatientLoginId(document.getString("patientLoginId"));
+                    detail.setStatus(Integer.parseInt(document.getString("status")));
+                    try {
+                        detail.setDone(ADHandler.getAppointmentDetail(document.getString("orderId")).getDone());
+                        detail.setPinned(ADHandler.getAppointmentDetail(document.getString("orderId")).getPinned());
+                    } catch (Exception e) {
+                        detail.setDone(false);
+                        detail.setPinned(false);
+                    }
+
 
                     ADHandler.addAppointment(detail);
                     taskIsNull = false;
@@ -249,7 +258,6 @@ public class first_frag extends Fragment {
 
         } catch (Exception e) {
             // TODO : If doctor's profile is not available in sql database;
-            Log.d("Ex", "1" + e.getMessage());
         }
 
         // Setting Appointment's Details
@@ -266,19 +274,35 @@ public class first_frag extends Fragment {
             PatientEmail.setText(detail.getPatientEmail());
             PatientAddress.setText(detail.getPatientAddress());
 
-            String Status = detail.getStatus();
-
-            if(Status.equals("cancelled")){
+            int Status = detail.getStatus();
+            boolean isDone = detail.getDone();
+            // 0 : successful, 1 : cancelled, 2 : pending
+            if (Status == 1) {
                 TopCornerTriangleView.setVisibility(View.VISIBLE);
                 TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_circle_20));
                 TopCornerImage.setVisibility(View.VISIBLE);
                 CancelCard.setVisibility(View.GONE);
             }
 
+            if (isDone){
+                DoneCardTextV.setText("UnMark as Done!");
+            }
+
+            DoneCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(DoneCardTextV.getText().toString().equals("Mark as Done!")){
+                        AppointmentDetail newDetails = new AppointmentDetail();
+                        newDetails.set
+                    }else{
+
+                    }
+                }
+            });
+
             appointmentsContainer.addView(view);
 
-        }catch (Exception  e){
-            Log.d("Ex", "2" + e.getMessage());
+        } catch (Exception e) {
             // TODO : If appointment details are not available in sql database;
         }
 

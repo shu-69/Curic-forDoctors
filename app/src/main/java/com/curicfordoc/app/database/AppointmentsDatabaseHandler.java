@@ -28,8 +28,8 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
                 " TEXT," + Params.KEY_PATIENT_EMAIL + " TEXT," + Params.KEY_PATIENT_ADDRESS +
                 " TEXT," + Params.KEY_DOCTOR_FEE + " TEXT," + Params.KEY_PATIENT_LOGIN_METHOD +
                 " TEXT," + Params.KEY_PATIENT_LOGIN_ID + " TEXT," + Params.KEY_STATUS +
-                " TEXT," + Params.KEY_IS_DONE + " BOOLEAN," + Params.KEY_IS_CANCELED +
-                " BOOLEAN" +  ")";
+                " TEXT," + Params.KEY_IS_DONE + " BOOLEAN," + Params.KEY_IS_PINNED +
+                " BOOLEAN" + ")";
 
         db.execSQL(create);
     }
@@ -62,7 +62,8 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
             values.put(Params.KEY_PATIENT_LOGIN_METHOD, details.getPatientLoginMethod());
             values.put(Params.KEY_PATIENT_LOGIN_ID, details.getPatientLoginId());
             values.put(Params.KEY_STATUS, details.getStatus());
-            values.put(Params.KEY_IS_DONE, details.get);
+            values.put(Params.KEY_IS_DONE, details.getDone());
+            values.put(Params.KEY_IS_PINNED, details.getPinned());
 
             db.insert(Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME, null, values);
             db.close();
@@ -88,11 +89,14 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
                 appointmentDetails.setPatientAge(cursor.getString(6));
                 appointmentDetails.setPatientGender(cursor.getString(7));
                 appointmentDetails.setPatientContact(cursor.getString(8));
-                appointmentDetails.setPatientAddress(cursor.getString(9));
-                appointmentDetails.setDoctorFee(cursor.getString(10));
-                appointmentDetails.setPatientLoginMethod(cursor.getString(11));
-                appointmentDetails.setPatientLoginId(cursor.getString(12));
-                appointmentDetails.setStatus(cursor.getString(13));
+                appointmentDetails.setPatientEmail(cursor.getString(9));
+                appointmentDetails.setPatientAddress(cursor.getString(10));
+                appointmentDetails.setDoctorFee(cursor.getString(11));
+                appointmentDetails.setPatientLoginMethod(cursor.getString(12));
+                appointmentDetails.setPatientLoginId(cursor.getString(13));
+                appointmentDetails.setStatus(Integer.parseInt(cursor.getString(14)));
+                appointmentDetails.setDone(Boolean.parseBoolean(cursor.getString(15)));
+                appointmentDetails.setPinned(Boolean.parseBoolean(cursor.getString(17)));
 
                 appointmentList.add(appointmentDetails);
             } while (cursor.moveToNext());
@@ -125,7 +129,9 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         detail.setDoctorFee(cursor.getString(11));
         detail.setPatientLoginMethod(cursor.getString(12));
         detail.setPatientLoginId(cursor.getString(13));
-        detail.setStatus(cursor.getString(14));
+        detail.setStatus(Integer.parseInt(cursor.getString(14)));
+        detail.setDone(Boolean.parseBoolean(cursor.getString(15)));
+        detail.setPinned(Boolean.parseBoolean(cursor.getString(16)));
 
         return detail;
     }
@@ -164,6 +170,8 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_PATIENT_LOGIN_METHOD, details.getPatientLoginMethod());
         values.put(Params.KEY_PATIENT_LOGIN_ID, details.getPatientLoginId());
         values.put(Params.KEY_STATUS, details.getStatus());
+        values.put(Params.KEY_IS_DONE, details.getDone());
+        values.put(Params.KEY_IS_PINNED, details.getPinned());
 
         db.update(Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME, values, Params.KEY_ORDER_ID + "=?",
                 new String[]{details.getOrderId()});
@@ -178,6 +186,7 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         db.delete(Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME, Params.KEY_ORDER_ID + "=?", new String[]{OrderID});
         db.close();
     }
+
 }
 
 

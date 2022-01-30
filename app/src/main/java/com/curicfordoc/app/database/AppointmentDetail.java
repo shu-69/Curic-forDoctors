@@ -15,11 +15,11 @@ public class AppointmentDetail {
     private String doctorFee;
     private String patientLoginMethod;
     private String patientLoginId;
-    private String status;
+    private int status; // 0 : successful , 1 : cancelled
     private boolean isDone;
-    private boolean isCancelled;
+    private boolean isPinned;
 
-    public AppointmentDetail(String orderId, String docId, String paymentId, String appointmentTime, String appointmentDate, String patientName, String patientAge, String patientGender, String patientContact, String patientEmail, String patientAddress, String doctorFee, String patientLoginMethod, String patientLoginId, String status, boolean isDone, boolean isCancelled) {
+    public AppointmentDetail(String orderId, String docId, String paymentId, String appointmentTime, String appointmentDate, String patientName, String patientAge, String patientGender, String patientContact, String patientEmail, String patientAddress, String doctorFee, String patientLoginMethod, String patientLoginId, int status, boolean isDone, boolean isPinned) {
         this.orderId = orderId;
         this.docId = docId;
         this.paymentId = paymentId;
@@ -36,7 +36,7 @@ public class AppointmentDetail {
         this.patientLoginId = patientLoginId;
         this.status = status;
         this.isDone = isDone;
-        this.isCancelled = isCancelled;
+        this.isPinned = isPinned;
     }
 
     public AppointmentDetail() {
@@ -46,11 +46,11 @@ public class AppointmentDetail {
         return orderId;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -162,7 +162,7 @@ public class AppointmentDetail {
         this.patientLoginId = patientLoginId;
     }
 
-    public boolean isDone() {
+    public boolean getDone() {
         return isDone;
     }
 
@@ -170,12 +170,12 @@ public class AppointmentDetail {
         isDone = done;
     }
 
-    public boolean isCancelled() {
-        return isCancelled;
+    public boolean getPinned() {
+        return isPinned;
     }
 
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
     }
 }
 
