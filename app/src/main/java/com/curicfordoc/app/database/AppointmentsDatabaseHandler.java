@@ -130,7 +130,10 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         detail.setPatientLoginMethod(cursor.getString(12));
         detail.setPatientLoginId(cursor.getString(13));
         detail.setStatus(Integer.parseInt(cursor.getString(14)));
-        detail.setDone(Boolean.parseBoolean(cursor.getString(15)));
+        if(cursor.getString(15).equals("1"))
+            detail.setDone(true);
+        else
+            detail.setDone(false);
         detail.setPinned(Boolean.parseBoolean(cursor.getString(16)));
 
         return detail;
