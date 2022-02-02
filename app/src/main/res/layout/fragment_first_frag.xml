@@ -493,20 +493,6 @@
 
                 </soup.neumorphism.NeumorphCardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoui"
-                    android:gravity="center"
-                    android:text="Transaction\nHistory"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/neumorphCardView"
-                    app:layout_constraintStart_toStartOf="@+id/neumorphCardView"
-                    app:layout_constraintTop_toBottomOf="@+id/neumorphCardView" />
-
                 <View
                     android:id="@+id/view"
                     android:layout_width="1dp"
@@ -548,19 +534,6 @@
 
                 </soup.neumorphism.NeumorphCardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/segoui"
-                    android:gravity="center"
-                    android:text="Update Hospital/Clinic\nDetails"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/neumorphCardView2"
-                    app:layout_constraintStart_toStartOf="@+id/neumorphCardView2"
-                    app:layout_constraintTop_toBottomOf="@+id/neumorphCardView2" />
 
                 <View
                     android:id="@+id/view2"
@@ -602,22 +575,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </soup.neumorphism.NeumorphCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/segoui"
-                    android:gravity="center"
-                    android:text="Manage\nDoctors"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/neumorphCardView3"
-                    app:layout_constraintStart_toStartOf="@+id/neumorphCardView3"
-                    app:layout_constraintTop_toBottomOf="@+id/neumorphCardView3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
