@@ -1,10 +1,8 @@
 package com.curicfordoc.app;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +37,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -51,7 +48,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,9 +62,10 @@ public class first_frag extends Fragment {
 
     View view;
     LabeledSwitch toogleOpenclose;
-    TextView textOpenClose;
+    TextView textOpenClose, day_date, day_name, total_appointments;
+    ImageView expand;
     LottieAnimationView refresh;
-    CardView hospitalRegistrationMessage;
+    CardView hospitalRegistrationMessage, noAppointmentsCard, ShimmerCard;
     LinearLayout appointmentsContainer;
 
     SharedPreferences HospDetailsSP;
@@ -129,46 +130,79 @@ public class first_frag extends Fragment {
         new userDetails(getContext());
 
         AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
-        for (int i = 0; i < 2; i++) {
-            AppointmentDetail detail = new AppointmentDetail();
-            detail.setOrderId(i + "");
-            detail.setPaymentId("this is payment Id");
-            detail.setDocId("2343");
-            detail.setAppointmentDate("12/02/2022");
-            detail.setAppointmentTime("03:00am to 03:30am");
-            detail.setPatientName("shu");
-            detail.setPatientAge("21");
-            detail.setPatientGender("Male");
-            detail.setPatientContact("+91 7979958673");
-            detail.setPatientEmail("shubhamkumardps10@gmail.com");
-            detail.setPatientAddress("AP Colony, Bhatbigha, Near Modern Academy, Gaya, Bihar 823001");
-            detail.setDoctorFee("400");
-            detail.setPatientLoginMethod("gmail_users");
-            detail.setPatientLoginId("shubhamkumardps10@gmail.com");
-            detail.setStatus(2); // 0 : successful, 1 : cancelled, 2 : pending
-            try {
-                detail.setDone(ADHandler.getAppointmentDetail(i+"").getDone());
-                detail.setPinned(ADHandler.getAppointmentDetail(i+"").getPinned());
-            } catch (Exception e) {
-                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                detail.setDone(false);
-                detail.setPinned(false);
+        for (int i = 0; i < 1; i++) {
+            if (i == 0) {
+                AppointmentDetail detail = new AppointmentDetail();
+                detail.setOrderId(i + "");
+                detail.setPaymentId("this is payment Id");
+                detail.setDocId("334909310");
+                detail.setAppointmentDate("03/02/2022");
+                detail.setAppointmentTime("03:00am to 03:30am");
+                detail.setPatientName("Shubham");
+                detail.setPatientAge("21");
+                detail.setPatientGender("Male");
+                detail.setPatientContact("+91 7979958673");
+                detail.setPatientEmail("shubhamkumardps10@gmail.com");
+                detail.setPatientAddress("AP Colony, Bhatbigha, Near Modern Academy, Gaya, Bihar 823001");
+                detail.setDoctorFee("400");
+                detail.setPatientLoginMethod("gmail_users");
+                detail.setPatientLoginId("shubhamkumardps10@gmail.com");
+                // 0 : successful, 1 : cancelled, 2 : pending
+                try {
+                    detail.setStatus(ADHandler.getAppointmentDetail(i + "").getStatus());
+                    detail.setDone(ADHandler.getAppointmentDetail(i + "").getDone());
+                    detail.setPinned(ADHandler.getAppointmentDetail(i + "").getPinned());
+                } catch (Exception e) {
+                    detail.setStatus(2);
+                    detail.setDone(false);
+                    detail.setPinned(false);
+                }
+                try {
+                    ADHandler.addAppointment(detail);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                AppointmentDetail detail = new AppointmentDetail();
+                detail.setOrderId(i + "");
+                detail.setPaymentId("this is payment Id");
+                detail.setDocId("463229885");
+                detail.setAppointmentDate("03/02/2022");
+                detail.setAppointmentTime("03:00am to 03:30am");
+                detail.setPatientName("Shubham");
+                detail.setPatientAge("21");
+                detail.setPatientGender("Male");
+                detail.setPatientContact("+91 7979958673");
+                detail.setPatientEmail("shubhamkumardps10@gmail.com");
+                detail.setPatientAddress("AP Colony, Bhatbigha, Near Modern Academy, Gaya, Bihar 823001");
+                detail.setDoctorFee("400");
+                detail.setPatientLoginMethod("gmail_users");
+                detail.setPatientLoginId("shubhamkumardps10@gmail.com");
+                try {
+                    detail.setStatus(ADHandler.getAppointmentDetail(i + "").getStatus());// 0 : successful, 1 : cancelled, 2 : pending
+                    detail.setDone(ADHandler.getAppointmentDetail(i + "").getDone());
+                    detail.setPinned(ADHandler.getAppointmentDetail(i + "").getPinned());
+                } catch (Exception e) {
+                    detail.setStatus(2);
+                    detail.setDone(false);
+                    detail.setPinned(false);
+                }
+                try {
+                    ADHandler.addAppointment(detail);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
-            ADHandler.addAppointment(detail);
-        }
 
-        showAppointmentDetails("334909310", "0");
-        showAppointmentDetails("469664598", "1");
-        showAppointmentDetails("510430864", "0");
-        showAppointmentDetails("580538425", "1");
-        showAppointmentDetails("463229885", "0");
+        }
 
         if (checkIfHospitalRegistered()) {
             ToggleShimmer(true);
             loadAllAppointments(userDetails.login_method, userDetails.userId);
         } else
             hospitalRegistrationMessage.setVisibility(View.VISIBLE);
+
 
         new LoadImage().execute(HospDetailsSP.getString("userAvatar", "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"));
 
@@ -184,6 +218,19 @@ public class first_frag extends Fragment {
                 refresh.playAnimation();
             }
         });
+        expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (appointmentsContainer.getVisibility() == View.VISIBLE){
+                    appointmentsContainer.setVisibility(View.GONE);
+                    expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_more_30));
+                }else{
+                    appointmentsContainer.setVisibility(View.VISIBLE);
+                    expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_less_30));
+                }
+            }
+        });
+
 
 
         return view;
@@ -194,8 +241,7 @@ public class first_frag extends Fragment {
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                boolean taskIsNull = true;
-                AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
+//                AppointmentsDatabaseHandler ADHandler = new AppointmentsDatabaseHandler(getContext());
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     AppointmentDetail detail = new AppointmentDetail();
                     detail.setOrderId(document.getString("orderId"));
@@ -212,32 +258,56 @@ public class first_frag extends Fragment {
                     detail.setDoctorFee(document.getString("doctorFee"));
                     detail.setPatientLoginMethod(document.getString("patientLoginMethod"));
                     detail.setPatientLoginId(document.getString("patientLoginId"));
-                    detail.setStatus(Integer.parseInt(document.getString("status")));
+                    detail.setStatus(Integer.parseInt(String.valueOf(document.get("status"))));
                     try {
-                        detail.setDone(ADHandler.getAppointmentDetail(document.getString("orderId")).getDone());
-                        detail.setPinned(ADHandler.getAppointmentDetail(document.getString("orderId")).getPinned());
+                        detail.setDone(new AppointmentsDatabaseHandler(getContext()).getAppointmentDetail(document.getString("orderId")).getDone());
+                        detail.setPinned(new AppointmentsDatabaseHandler(getContext()).getAppointmentDetail(document.getString("orderId")).getPinned());
                     } catch (Exception e) {
                         detail.setDone(false);
                         detail.setPinned(false);
                     }
-
-
-                    ADHandler.addAppointment(detail);
-                    taskIsNull = false;
+                    try {
+                        new AppointmentsDatabaseHandler(getContext()).addAppointment(detail);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-
-                if (taskIsNull) {
-                    ToggleShimmer(false);
-                    showNoAppointmentsCard();
-                } else {
-                    ToggleShimmer(false);
-                }
+                loadAppointmentsFromDatabase();
             }
         });
     }
 
+    private void loadAppointmentsFromDatabase() {
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        int count = 0; // For counting total appointments;
+        try {
+            boolean checkIsNull = true;
+
+            List<AppointmentDetail> allAppointments = new AppointmentsDatabaseHandler(getContext()).getAllAppointments();
+
+            ToggleShimmer(false);
+            for (AppointmentDetail detail : allAppointments) {
+                if (detail.getAppointmentDate().equals(currentDate)) {
+                    count++;
+                    checkIsNull = false;
+                    showAppointmentDetails(detail.getDocId(), detail.getOrderId());
+                }
+            }
+            total_appointments.setText(count + "");
+            if (checkIsNull) {
+                showNoAppointmentsCard();
+            }
+        } catch (Exception e) {
+            ToggleShimmer(false);
+        }
+
+    }
+
     private void showAppointmentDetails(String DocID, String AppointmentOrderID) {
+
         View view = View.inflate(getContext(), R.layout.appointment_details_card, null);
+
+        MaterialCardView ParentCard = view.findViewById(R.id.parentCard);
 
         ImageView DocProfile = view.findViewById(R.id.docProfileImage);
         TextView DocName = view.findViewById(R.id.doctor_name);
@@ -259,6 +329,7 @@ public class first_frag extends Fragment {
         CardView DoneCard = view.findViewById(R.id.doneCardV);
         TextView DoneCardTextV = view.findViewById(R.id.doneCardTextV);
         CardView CancelCard = view.findViewById(R.id.cancelAppointmentCardV);
+        CardView DeleteCard = view.findViewById(R.id.deleteCardView);
         CardView MessageCard = view.findViewById(R.id.appointmentMessageCard);
         TextView Message = view.findViewById(R.id.messageTextV);
 
@@ -291,6 +362,7 @@ public class first_frag extends Fragment {
 
             int Status = detail.getStatus();
             boolean isDone = detail.getDone();
+
             // 0 : successful, 1 : cancelled, 2 : pending
             if (Status == 1) {
                 TopCornerTriangleView.setVisibility(View.VISIBLE);
@@ -300,9 +372,11 @@ public class first_frag extends Fragment {
                 DoneCard.setVisibility(View.INVISIBLE);
                 MessageCard.setVisibility(View.VISIBLE);
                 Message.setText("This Appointment has been cancelled and the fee amount has been refunded.");
+                DeleteCard.setVisibility(View.VISIBLE);
+                ParentCard.setStrokeColor(Color.parseColor("#B84040"));
             } // TODO : Else if Status is 0.
 
-            if (isDone){
+            if (isDone) {
                 DoneCardTextV.setText("Unmark as Done!");
                 TopCornerTriangleView.setVisibility(View.VISIBLE);
                 TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_circle_20));
@@ -312,7 +386,7 @@ public class first_frag extends Fragment {
             DoneCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(DoneCardTextV.getText().toString().equals("Mark as Done!")){
+                    if (DoneCardTextV.getText().toString().equals("Mark as Done!")) {
                         TopCornerTriangleView.setVisibility(View.VISIBLE);
                         TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_circle_20));
                         TopCornerImage.setVisibility(View.VISIBLE);
@@ -344,7 +418,7 @@ public class first_frag extends Fragment {
 
                         // TODO ::
 
-                    }else{
+                    } else {
                         TopCornerTriangleView.setVisibility(View.INVISIBLE);
                         TopCornerImage.setVisibility(View.INVISIBLE);
                         AppointmentDetail newDetails = new AppointmentDetail();
@@ -375,14 +449,43 @@ public class first_frag extends Fragment {
                 }
             });
 
+            DeleteCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ProgressBar DeletingProgress = view.findViewById(R.id.deleting_progress);
+                    ImageView DeleteIcon = view.findViewById(R.id.delete_icon);
+                    DeleteIcon.setVisibility(View.INVISIBLE);
+                    DeletingProgress.setVisibility(View.VISIBLE);
+                    new userDetails(getContext());
+                    db.collection("registered_doctors").document(userDetails.login_method).collection(userDetails.userId).document("appointments_received")
+                            .collection("approved").document(detail.getOrderId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(@NonNull Void unused) {
+                            appointmentsContainer.removeAllViews();
+                            new AppointmentsDatabaseHandler(getContext()).deleteAppointment(detail.getOrderId());
+                            loadAppointmentsFromDatabase();
+                            DeletingProgress.setVisibility(View.INVISIBLE);
+                            DeleteIcon.setVisibility(View.VISIBLE);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            DeletingProgress.setVisibility(View.INVISIBLE);
+                            DeleteIcon.setVisibility(View.VISIBLE);
+                            Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
             CancelCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Are your sure you want to cancel this appointment?");
                     alertDialog.setMessage("This cannot be undo." + "\n\n"
-                                            + "\u2022 Patient will get their money refunded." + "\n"
-                                            + "\u2022 Patient will be notified about the Appointment cancellation." + "\n");
+                            + "\u2022 Patient will get their money refunded." + "\n" // \u2022 : Bullet
+                            + "\u2022 Patient will be notified about the Appointment cancellation." + "\n");
                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
@@ -393,13 +496,70 @@ public class first_frag extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
                             dialog.dismiss();
-                            TopCornerTriangleView.setVisibility(View.VISIBLE);
-                            TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_cancel_20));
-                            TopCornerImage.setVisibility(View.VISIBLE);
-                            CancelCard.setVisibility(View.GONE);
-                            DoneCard.setVisibility(View.INVISIBLE);
-                            MessageCard.setVisibility(View.VISIBLE);
-                            Message.setText("This Appointment has been cancelled and the fee amount has been refunded.");
+
+                            Map<String, Object> note = new HashMap<>();
+
+                            note.put("orderId", detail.getOrderId());
+                            note.put("paymentId", detail.getPaymentId());
+                            note.put("docId", detail.getDocId());
+                            note.put("appointmentDate", detail.getAppointmentDate());
+                            note.put("appointmentTime", detail.getAppointmentTime());
+                            note.put("patientName", detail.getPatientName());
+                            note.put("patientAge", detail.getPatientAge());
+                            note.put("patientGender", detail.getPatientGender());
+                            note.put("patientPhone", detail.getPatientContact());
+                            note.put("patientEmail", detail.getPatientEmail());
+                            note.put("patientAddress", detail.getPatientAddress());
+                            note.put("doctorFee", detail.getDoctorFee());
+                            note.put("patientLoginMethod", detail.getPatientLoginMethod());
+                            note.put("patientLoginId", detail.getPatientLoginId());
+                            note.put("status", 1);
+
+                            db.collection("registered_doctors").document(userDetails.login_method).collection(userDetails.userId).document("appointments_received")
+                                    .collection("approved").document(detail.getOrderId()).set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(@NonNull Void unused) {
+                                    AppointmentDetail newDetails = new AppointmentDetail();
+
+                                    newDetails.setOrderId(detail.getOrderId());
+                                    newDetails.setDocId(detail.getDocId());
+                                    newDetails.setPaymentId(detail.getPaymentId());
+                                    newDetails.setAppointmentTime(detail.getAppointmentTime());
+                                    newDetails.setAppointmentDate(detail.getAppointmentDate());
+                                    newDetails.setPatientName(detail.getPatientName());
+                                    newDetails.setPatientAge(detail.getPatientAge());
+                                    newDetails.setPatientGender(detail.getPatientGender());
+                                    newDetails.setPatientContact(detail.getPatientContact());
+                                    newDetails.setPatientEmail(detail.getPatientEmail());
+                                    newDetails.setPatientAddress(detail.getPatientAddress());
+                                    newDetails.setDoctorFee(detail.getDoctorFee());
+                                    newDetails.setPatientLoginMethod(detail.getPatientLoginMethod());
+                                    newDetails.setPatientLoginId(detail.getPatientLoginId());
+                                    newDetails.setStatus(1); // 0 : done, 1 : cancelled, 2 : pending
+                                    newDetails.setDone(detail.getDone());
+                                    newDetails.setPinned(detail.getPinned());
+
+                                    new AppointmentsDatabaseHandler(getContext()).updateAppointmentDetails(newDetails);
+
+                                    TopCornerTriangleView.setVisibility(View.VISIBLE);
+                                    TopCornerImage.setImageDrawable(getContext().getDrawable(R.drawable.ic_cancel_20));
+                                    TopCornerImage.setVisibility(View.VISIBLE);
+                                    CancelCard.setVisibility(View.GONE);
+                                    DoneCard.setVisibility(View.INVISIBLE);
+                                    MessageCard.setVisibility(View.VISIBLE);
+                                    Message.setText("This Appointment has been cancelled and the fee amount has been refunded.");
+                                    DeleteCard.setVisibility(View.VISIBLE);
+                                    ParentCard.setStrokeColor(Color.parseColor("#B84040"));
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
                         }
                     }).show();
                 }
@@ -490,11 +650,17 @@ public class first_frag extends Fragment {
         refresh = (LottieAnimationView) view.findViewById(R.id.refresh);
         hospitalRegistrationMessage = view.findViewById(R.id.hospital_registration_message_card);
 
+        day_name = view.findViewById(R.id.day_name);
+        day_date = view.findViewById(R.id.day_date);
+        noAppointmentsCard = view.findViewById(R.id.no_appointments_card);
+        total_appointments = view.findViewById(R.id.total_appointments);
+        expand = view.findViewById(R.id.expand_image);
+
+        ShimmerCard = view.findViewById(R.id.loading_card);
         appointmentsContainer = view.findViewById(R.id.todayAppointLinear);
     }
 
     private void ToggleShimmer(boolean Visibility) {
-        CardView ShimmerCard = view.findViewById(R.id.loading_card);
         if (Visibility)
             ShimmerCard.setVisibility(View.VISIBLE);
         else
@@ -502,9 +668,7 @@ public class first_frag extends Fragment {
     }
 
     private void showNoAppointmentsCard() {
-        TextView day_name = view.findViewById(R.id.day_name);
-        TextView day_date = view.findViewById(R.id.day_date);
-        CardView noAppointmentsCard = view.findViewById(R.id.no_appointments_card);
+        Log.d("Excep", "Hii");
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -518,6 +682,7 @@ public class first_frag extends Fragment {
         day_name.setText(dayOfWeek);
         day_date.setText(String.valueOf(day));
         noAppointmentsCard.setVisibility(View.VISIBLE);
+
     }
 
     private boolean checkIfHospitalRegistered() {

@@ -14,4 +14,6 @@
     <string name="playstore_link">https://play.google.com/store/apps/details?id=com.curicfordoc.app</string>
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="verification_text">Verification under process, we will notify you when it completes. It can takes 2-3 working days.\nYou can continue using our services while the verification under process.</string>
+    <string name="scan_and_verify_desc"><![CDATA[We recommend you to use this feature to view any Appointment\'s detail & payment status.]]></string>
+    <string name="how_it_works"><u>How it works?</u></string>
 </resources>

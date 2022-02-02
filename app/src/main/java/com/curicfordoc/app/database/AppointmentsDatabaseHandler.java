@@ -39,7 +39,7 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public void addAppointment(AppointmentDetail details) {
+    public void addAppointment(AppointmentDetail details) throws Exception{
 
         if (checkIfDetailsAvailable(details.getOrderId())) {
             updateAppointmentDetails(details);
@@ -77,6 +77,7 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         String select = "SELECT * FROM " + Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME;
         Cursor cursor = db.rawQuery(select, null);
 
+
         if (cursor.moveToFirst()) {
             do {
                 AppointmentDetail appointmentDetails = new AppointmentDetail();
@@ -95,8 +96,14 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
                 appointmentDetails.setPatientLoginMethod(cursor.getString(12));
                 appointmentDetails.setPatientLoginId(cursor.getString(13));
                 appointmentDetails.setStatus(Integer.parseInt(cursor.getString(14)));
-                appointmentDetails.setDone(Boolean.parseBoolean(cursor.getString(15)));
-                appointmentDetails.setPinned(Boolean.parseBoolean(cursor.getString(17)));
+                if (cursor.getString(15).equals("1"))
+                    appointmentDetails.setDone(true);
+                else
+                    appointmentDetails.setDone(false);
+                if (cursor.getString(16).equals("1"))
+                    appointmentDetails.setPinned(true);
+                else
+                    appointmentDetails.setPinned(false);
 
                 appointmentList.add(appointmentDetails);
             } while (cursor.moveToNext());
@@ -130,28 +137,36 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         detail.setPatientLoginMethod(cursor.getString(12));
         detail.setPatientLoginId(cursor.getString(13));
         detail.setStatus(Integer.parseInt(cursor.getString(14)));
-        if(cursor.getString(15).equals("1"))
+        if (cursor.getString(15).equals("1"))
             detail.setDone(true);
         else
             detail.setDone(false);
-        detail.setPinned(Boolean.parseBoolean(cursor.getString(16)));
+        if (cursor.getString(16).equals("1"))
+            detail.setPinned(true);
+        else
+            detail.setPinned(false);
 
         return detail;
     }
 
     public boolean checkIfDetailsAvailable(String OrderID) {
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        try {
 
-        String select = "SELECT * FROM " + Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME +
-                " WHERE " + Params.KEY_ORDER_ID + " = " + OrderID;
-        Cursor cursor = db.rawQuery(select, null);
+            SQLiteDatabase db = this.getReadableDatabase();
 
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+            String select = "SELECT * FROM " + Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME +
+                    " WHERE " + Params.KEY_ORDER_ID + " = " + OrderID;
+            Cursor cursor = db.rawQuery(select, null);
 
+            if (cursor.getCount() > 0)
+                return true;
+
+        } catch (Exception e) {
+
+        }
+
+        return false;
     }
 
     public void updateAppointmentDetails(AppointmentDetail details) {
@@ -183,7 +198,7 @@ public class AppointmentsDatabaseHandler extends SQLiteOpenHelper {
         // Add int return statement to view affected rows;
     }
 
-    public void deleteAppointment(String OrderID){
+    public void deleteAppointment(String OrderID) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(Params.APPOINTMENTS_DETAILS_DB_TABLE_NAME, Params.KEY_ORDER_ID + "=?", new String[]{OrderID});
