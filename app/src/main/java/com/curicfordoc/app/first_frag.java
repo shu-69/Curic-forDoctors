@@ -72,6 +72,7 @@ public class first_frag extends Fragment {
     CardView hospitalRegistrationMessage, noAppointmentsCard, ShimmerCard, ScanAndCureCardV;
     LinearLayout appointmentsContainer;
     NeumorphCardView transactionCardV, updateHospDetailsCardV, manageDoctorsCardV;
+    LinearLayout DocProfileContainer;
 
     SharedPreferences HospDetailsSP;
     SharedPreferences.Editor editor;
@@ -202,6 +203,8 @@ public class first_frag extends Fragment {
 
         }
 
+        setDocProfiles();
+
         if (checkIfHospitalRegistered()) {
             ToggleShimmer(true);
             loadAllAppointments(userDetails.login_method, userDetails.userId);
@@ -270,6 +273,22 @@ public class first_frag extends Fragment {
 
 
         return view;
+    }
+
+    private void setDocProfiles() {
+
+        try {
+            List<DocDetail> details =  new DoctorsDatabaseHandler(getContext()).getAllDoctors();
+            for( DocDetail detail : details){
+                View view = View.inflate(getContext(), R.layout.card_image_view, null);
+                ImageView profileImg = view.findViewById(R.id.doc_profile_img);
+                profileImg.setImageBitmap(StringToBitMap(detail.getImage()));
+                DocProfileContainer.addView(view);
+            }
+        }catch(Exception e){
+
+        }
+
     }
 
     private void loadAllAppointments(String login_method, String userId) {
@@ -700,6 +719,7 @@ public class first_frag extends Fragment {
         ScanAndCureCardV = view.findViewById(R.id.scan_and_cure_card);
         ShimmerCard = view.findViewById(R.id.loading_card);
         appointmentsContainer = view.findViewById(R.id.todayAppointLinear);
+        DocProfileContainer = view.findViewById(R.id.docs_linear_layout);
     }
 
     private void ToggleShimmer(boolean Visibility) {
