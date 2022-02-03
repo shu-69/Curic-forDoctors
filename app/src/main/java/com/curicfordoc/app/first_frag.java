@@ -3,6 +3,7 @@ package com.curicfordoc.app;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,6 +38,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -53,6 +55,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import soup.neumorphism.NeumorphCardView;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link first_frag#newInstance} factory method to
@@ -62,11 +66,12 @@ public class first_frag extends Fragment {
 
     View view;
     LabeledSwitch toogleOpenclose;
-    TextView textOpenClose, day_date, day_name, total_appointments;
+    TextView topTextTodaysAppointmentsTextV, textOpenClose, day_date, day_name, total_appointments;
     ImageView expand;
     LottieAnimationView refresh;
-    CardView hospitalRegistrationMessage, noAppointmentsCard, ShimmerCard;
+    CardView hospitalRegistrationMessage, noAppointmentsCard, ShimmerCard, ScanAndCureCardV;
     LinearLayout appointmentsContainer;
+    NeumorphCardView transactionCardV, updateHospDetailsCardV, manageDoctorsCardV;
 
     SharedPreferences HospDetailsSP;
     SharedPreferences.Editor editor;
@@ -218,17 +223,48 @@ public class first_frag extends Fragment {
                 refresh.playAnimation();
             }
         });
-        expand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (appointmentsContainer.getVisibility() == View.VISIBLE){
-                    appointmentsContainer.setVisibility(View.GONE);
-                    expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_more_30));
-                }else{
-                    appointmentsContainer.setVisibility(View.VISIBLE);
-                    expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_less_30));
-                }
+        expand.setOnClickListener(v ->{
+            if (appointmentsContainer.getVisibility() == View.VISIBLE){
+                appointmentsContainer.setVisibility(View.GONE);
+                expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_more_30));
+            }else{
+                appointmentsContainer.setVisibility(View.VISIBLE);
+                expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_less_30));
             }
+        });
+        topTextTodaysAppointmentsTextV.setOnClickListener(v ->{
+            if (appointmentsContainer.getVisibility() == View.VISIBLE){
+                appointmentsContainer.setVisibility(View.GONE);
+                expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_more_30));
+            }else{
+                appointmentsContainer.setVisibility(View.VISIBLE);
+                expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_less_30));
+            }
+        });
+        transactionCardV.setOnClickListener(v ->{
+            Intent intent = new Intent(getActivity(), TransactionHistory.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
+        updateHospDetailsCardV.setOnClickListener(v ->{
+            if (HospDetailsSP.contains("hospName")) {
+                Intent intent = new Intent(getActivity(), clinic_details.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+        manageDoctorsCardV.setOnClickListener(v ->{
+            Intent intent = new Intent(getActivity(), ManageDoctors.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        });
+        ScanAndCureCardV.setOnClickListener(v ->{
+            //BottomNavigationView bottom_nav = view.findViewById(R.id.bottomnav);
+            homepage.bottom_nav.setSelectedItemId(R.id.third_frag);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new third_frag()).commit();
         });
 
 
@@ -649,6 +685,7 @@ public class first_frag extends Fragment {
         textOpenClose = (TextView) view.findViewById(R.id.textOpenClose);
         refresh = (LottieAnimationView) view.findViewById(R.id.refresh);
         hospitalRegistrationMessage = view.findViewById(R.id.hospital_registration_message_card);
+        topTextTodaysAppointmentsTextV = view.findViewById(R.id.textView62);
 
         day_name = view.findViewById(R.id.day_name);
         day_date = view.findViewById(R.id.day_date);
@@ -656,6 +693,11 @@ public class first_frag extends Fragment {
         total_appointments = view.findViewById(R.id.total_appointments);
         expand = view.findViewById(R.id.expand_image);
 
+        transactionCardV = view.findViewById(R.id.transaction_history_cardv);
+        updateHospDetailsCardV = view.findViewById(R.id.update_hosp_details_cardv);
+        manageDoctorsCardV = view.findViewById(R.id.manage_doctors_cardv);
+
+        ScanAndCureCardV = view.findViewById(R.id.scan_and_cure_card);
         ShimmerCard = view.findViewById(R.id.loading_card);
         appointmentsContainer = view.findViewById(R.id.todayAppointLinear);
     }

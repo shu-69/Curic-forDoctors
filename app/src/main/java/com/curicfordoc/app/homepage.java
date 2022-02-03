@@ -13,12 +13,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class homepage extends AppCompatActivity {
 
+    public static BottomNavigationView bottom_nav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        BottomNavigationView bottom_nav = findViewById(R.id.bottomnav);
+        bottom_nav = findViewById(R.id.bottomnav);
         bottom_nav.setOnNavigationItemSelectedListener(navListner);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new first_frag()).commit();
@@ -41,10 +43,10 @@ public class homepage extends AppCompatActivity {
                 case R.id.third_frag:t_frag:
                 selectedFragment = new third_frag();
                     break;
-//
-//                case R.id.fourth_frag:_frag:
-//                selectedFragment = new fourth_frag();
-//                    break;
+
+                case R.id.fourth_frag:_frag:
+                selectedFragment = new fourth_frag();
+                    break;
 
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, selectedFragment).commit();

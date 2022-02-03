@@ -5,20 +5,21 @@
         android:id="@+id/first_frag"
         android:icon="@drawable/ic_baseline_home_24"
         android:iconTint="@color/app_default"
-        android:title="HOME"
-
-        />
+        android:title="HOME" />
     <item
-            android:id="@+id/sec_frag"
-            android:icon="@drawable/appoint_green"
-            android:iconTint="@color/app_default"
-            android:title="APPOINTMENTS"
-            />
-        <item
-            android:id="@+id/third_frag"
-            android:icon="@drawable/profile_green"
-            android:iconTint="@color/app_default"
-            android:title="PROFILE"
-            />
+        android:id="@+id/sec_frag"
+        android:icon="@drawable/appoint_green"
+        android:iconTint="@color/app_default"
+        android:title="APPOINTMENTS" />
+    <item
+        android:id="@+id/third_frag"
+        android:icon="@drawable/ic_qr_code_24"
+        android:iconTint="@color/app_default"
+        android:title="SCAN &amp; CURE" />
+    <item
+        android:id="@+id/fourth_frag"
+        android:icon="@drawable/profile_green"
+        android:iconTint="@color/app_default"
+        android:title="PROFILE" />
 
 </menu>
