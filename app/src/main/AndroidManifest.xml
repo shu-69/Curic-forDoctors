@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CurerForDoctors">
         <activity
+            android:name=".doc_details"
+            android:exported="false"/>
+        <activity
             android:name=".ManageDoctors"
             android:exported="false" />
         <activity

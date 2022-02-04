@@ -142,7 +142,7 @@ public class first_frag extends Fragment {
                 detail.setOrderId(i + "");
                 detail.setPaymentId("this is payment Id");
                 detail.setDocId("334909310");
-                detail.setAppointmentDate("03/02/2022");
+                detail.setAppointmentDate("04/02/2022");
                 detail.setAppointmentTime("03:00am to 03:30am");
                 detail.setPatientName("Shubham");
                 detail.setPatientAge("21");
@@ -226,31 +226,31 @@ public class first_frag extends Fragment {
                 refresh.playAnimation();
             }
         });
-        expand.setOnClickListener(v ->{
-            if (appointmentsContainer.getVisibility() == View.VISIBLE){
+        expand.setOnClickListener(v -> {
+            if (appointmentsContainer.getVisibility() == View.VISIBLE) {
                 appointmentsContainer.setVisibility(View.GONE);
                 expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_more_30));
-            }else{
+            } else {
                 appointmentsContainer.setVisibility(View.VISIBLE);
                 expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_less_30));
             }
         });
-        topTextTodaysAppointmentsTextV.setOnClickListener(v ->{
-            if (appointmentsContainer.getVisibility() == View.VISIBLE){
+        topTextTodaysAppointmentsTextV.setOnClickListener(v -> {
+            if (appointmentsContainer.getVisibility() == View.VISIBLE) {
                 appointmentsContainer.setVisibility(View.GONE);
                 expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_more_30));
-            }else{
+            } else {
                 appointmentsContainer.setVisibility(View.VISIBLE);
                 expand.setImageDrawable(getContext().getDrawable(R.drawable.ic_expand_less_30));
             }
         });
-        transactionCardV.setOnClickListener(v ->{
+        transactionCardV.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), TransactionHistory.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
-        updateHospDetailsCardV.setOnClickListener(v ->{
+        updateHospDetailsCardV.setOnClickListener(v -> {
             if (HospDetailsSP.contains("hospName")) {
                 Intent intent = new Intent(getActivity(), clinic_details.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -258,18 +258,21 @@ public class first_frag extends Fragment {
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
-        manageDoctorsCardV.setOnClickListener(v ->{
-            Intent intent = new Intent(getActivity(), ManageDoctors.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        manageDoctorsCardV.setOnClickListener(v -> {
+            if (HospDetailsSP.contains("hospName")){
+                Intent intent = new Intent(getActivity(), ManageDoctors.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }else{
+                Toast.makeText(getContext(), "Please register your Hospital/Clinic", Toast.LENGTH_SHORT).show();
+            }
         });
-        ScanAndCureCardV.setOnClickListener(v ->{
+        ScanAndCureCardV.setOnClickListener(v -> {
             //BottomNavigationView bottom_nav = view.findViewById(R.id.bottomnav);
             homepage.bottom_nav.setSelectedItemId(R.id.third_frag);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new third_frag()).commit();
         });
-
 
 
         return view;
@@ -278,16 +281,36 @@ public class first_frag extends Fragment {
     private void setDocProfiles() {
 
         try {
-            List<DocDetail> details =  new DoctorsDatabaseHandler(getContext()).getAllDoctors();
-            for( DocDetail detail : details){
+            List<DocDetail> details = new DoctorsDatabaseHandler(getContext()).getAllDoctors();
+            for (DocDetail detail : details) {
                 View view = View.inflate(getContext(), R.layout.card_image_view, null);
                 ImageView profileImg = view.findViewById(R.id.doc_profile_img);
                 profileImg.setImageBitmap(StringToBitMap(detail.getImage()));
                 DocProfileContainer.addView(view);
+
+                view.setOnClickListener(v ->{
+                    Intent intent = new Intent(getContext(), doc_details.class);
+                    intent.putExtra("docId", detail.getId());
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                });
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
+        View view = View.inflate(getContext(), R.layout.card_add_doctor, null);
+        DocProfileContainer.addView(view);
+        view.setOnClickListener(v ->  {
+            if (HospDetailsSP.contains("hospName")){
+                Intent intent = new Intent(getActivity(), ManageDoctors.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }else{
+                Toast.makeText(getContext(), "Please register your Hospital/Clinic", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
     }
 

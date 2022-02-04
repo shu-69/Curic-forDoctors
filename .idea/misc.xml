@@ -9,6 +9,7 @@
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/custom_edit_text_appborder.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/custom_edit_text_error.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/custom_edit_text_redborder.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/doc_detail_layout_bg.xml" value="0.2555" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/drop_shadow.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/ic_camera_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_call_back_support.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_clinic_details.xml" value="0.264" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_details_loader.xml" value="0.152" />
+        <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_doc_details.xml" value="0.4" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_email_support.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_feedback.xml" value="0.25" />
         <entry key="..\:/Users/shubh/AndroidStudioProjects/CurerforDoctors/app/src/main/res/layout/activity_help_and_support.xml" value="0.2" />
